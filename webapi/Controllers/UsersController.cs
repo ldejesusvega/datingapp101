@@ -18,18 +18,6 @@ namespace webapi.Controllers
             _context = context;
         }
 
-        /***
-        syncronous call
-                public ActionResult<IEnumerable<AppUser>> GetUsers()
-                {
-                    var users = _context.Users.ToList();
-                    return users;
-                }
-
-        move to asyncronous call below
-
-        **/
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
