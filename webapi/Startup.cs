@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using webapi.Data;
 
 namespace webapi
 {
@@ -21,6 +23,11 @@ namespace webapi
         {
 
             services.AddControllers();
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlite("Connection String");
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi", Version = "v1" });
