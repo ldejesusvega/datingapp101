@@ -22,6 +22,7 @@ namespace webapi
         {
 
             services.AddControllers();
+            services.AddCors(); // Allow API request from specific point
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
@@ -31,6 +32,7 @@ namespace webapi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi", Version = "v1" });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +48,10 @@ namespace webapi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            // p means policy
+            // define how CORS allow requesr from WithOrigin
+            // Cors should be place after Routing, and before Authozation
+            app.UseCors(p => p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 
             app.UseAuthorization();
 
